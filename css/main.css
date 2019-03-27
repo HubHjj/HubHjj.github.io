@@ -1823,7 +1823,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #f13cff;
+  background: #9cff50;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2997,17 +2997,4 @@ pre .javascript .function {
 }
 .post-body a:hover {
   color: #fc6423;
-}
-body {
-  background: url("https://unsplash.com/photos/O68D64n0C-k");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: 50% 50%;
-}
-.main-inner {
-  margin-top: 60px;
-  padding: 60px 60px 60px 60px;
-  background: #fff;
-  opacity: 0.8;
-  min-height: 500px;
 }
