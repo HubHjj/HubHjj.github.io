@@ -88,7 +88,7 @@
   {% include '_third-party/mathjax.swig' %}
   {% include '_third-party/scroll-cookie.swig' %}
   {% include '_third-party/exturl.swig' %}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>;
+  
 
   <!-- 页面点击小红心 -->
   <script type="text/javascript" src="https://blog-static.cnblogs.com/files/ioufev/love.js"></script>
