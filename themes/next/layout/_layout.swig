@@ -123,13 +123,7 @@
   {% include '_third-party/chatra.swig' %}
   {% include '_third-party/tidio.swig' %}
   
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>;
-  <script>
-    // 背景图片
-    // 线条鲸鱼：https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-708825.jpg
-    // 云：https://i.loli.net/2018/11/02/5bdb2a8dd9eef.jpg
-    $("body").backstretch("https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-708825.jpg");
-  </script>
+
   
   <!-- 页面点击小红心 -->
  <script type="text/javascript" src="https://blog-static.cnblogs.com/files/ioufev/love.js"></script>

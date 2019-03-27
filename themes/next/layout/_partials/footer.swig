@@ -36,11 +36,7 @@
     #}{{ symbolsTimeTotal(site, theme.symbols_count_time.awl, theme.symbols_count_time.wpm, __('symbols_count_time.time_minutes')) }}{#
   #}</span>
   {% endif %}
-  <div class="powered-by">
-<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
-  本站访客数:<span id="busuanzi_value_site_uv"></span>
-</span>
-</div>
+  <<span class="hljs-name">div> <<span class="hljs-name">script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></<span class="hljs-name">script> <<span class="hljs-name">span id="busuanzi_container_site_pv" style='display:none'> 本站总访问量 <<span class="hljs-name">span id="busuanzi_value_site_pv"></<span class="hljs-name">span> 次 <<span class="hljs-name">span class="post-meta-divider">|</<span class="hljs-name">span> </<span class="hljs-name">span> <<span class="hljs-name">span id="busuanzi_container_site_uv" style='display:none'> 有<<span class="hljs-name">span id="busuanzi_value_site_uv"></<span class="hljs-name">span>人看过我的博客啦 </<span class="hljs-name">span> </<span class="hljs-name">div>
 </div>
 
 {% if theme.footer.powered.enable %}
