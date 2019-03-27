@@ -91,7 +91,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>;
   <script>
     // 背景图片
-    $("body").backstretch("https://unsplash.com/photos/O68D64n0C-k");
+    $("body").backstretch("https://wx3.sinaimg.cn/large/ad34f2d1ly1fzearwbdzkj22y41o07wk.jpg");
   </script>
 
   <!-- 页面点击小红心 -->
