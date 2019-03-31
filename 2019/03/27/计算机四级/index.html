@@ -104,7 +104,7 @@
 <meta property="og:description" content="刷题库时的一些小记录 操作系统1、操作系统位于硬件之上软件之下，为软件提供相应接口，使开发人员不用更操心底层的事将底层封装抽象画，只需要使用提供的接口。 2、操作系统提供给用户的接口有命令行、系统调用 3、核心态（管态）是特权态，用户态（目态）可以运行非特权指令。核心态运行于内核 4、进程控制块分为调度信息和现场信息。调度信息供进程调度时使用，描述了进程当前所处的状况、包括进程名、进程号、存储信息">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://img.blog.csdn.net/20131031074819750?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2FuZzM3OTI3NTYxNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
-<meta property="og:updated_time" content="2019-03-27T14:26:06.351Z">
+<meta property="og:updated_time" content="2019-03-28T00:17:10.292Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="操作系统and计算机网络">
 <meta name="twitter:description" content="刷题库时的一些小记录 操作系统1、操作系统位于硬件之上软件之下，为软件提供相应接口，使开发人员不用更操心底层的事将底层封装抽象画，只需要使用提供的接口。 2、操作系统提供给用户的接口有命令行、系统调用 3、核心态（管态）是特权态，用户态（目态）可以运行非特权指令。核心态运行于内核 4、进程控制块分为调度信息和现场信息。调度信息供进程调度时使用，描述了进程当前所处的状况、包括进程名、进程号、存储信息">
@@ -367,12 +367,24 @@
                 
               
 
-              <time title="创建时间：2019-03-27 20:22:54 / 修改时间：22:26:06" itemprop="dateCreated datePublished" datetime="2019-03-27T20:22:54+08:00">2019-03-27</time>
+              <time title="创建时间：2019-03-27 20:22:54" itemprop="dateCreated datePublished" datetime="2019-03-27T20:22:54+08:00">2019-03-27</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-28 08:17:10" itemprop="dateModified" datetime="2019-03-28T08:17:10+08:00">2019-03-28</time>
               
             
           </span>
@@ -432,7 +444,11 @@
 <a id="more"></a>
 <p>5、<font color="#0000FF">最佳置换算法（OPT）</font>（理想置换算法）：从主存中移出永远不再需要的页面；如无这样的页面存在，则选择最长时间不需要访问的页面。于所选择的被淘汰页面将是以后永不使用的，或者是在最长时间内不再被访问的页面，这样可以保证获得最低的缺页率。 即被淘汰页面是以后永不使用或最长时间内不再访问的页面。因此要对未来进行预判。<font color="#0000FF">先进先出置换算法（FIFO）</font>：是最简单的页面置换算法。这种算法的基本思想是：当需要淘汰一个页面时，总是选择驻留主存时间最长的页面进行淘汰，即先进入主存的页面先淘汰。其理由是：最早调入主存的页面不再被使用的可能性最大。 即优先淘汰最早进入内存的页面。 <font color="#0000FF">最近最久未使用（LRU）算法</font>：这种算法的基本思想是：利用局部性原理，根据一个作业在执行过程中过去的页面访问历史来推测未来的行为。它认为过去一段时间里不曾被访问过的页面，在最近的将来可能也不会再被访问。所以，这种算法的实质是：当需要淘汰一个页面时，总是选择在最近一段时间内最久不用的页面予以淘汰。 即淘汰最近最长时间未访问过的页面。</p>
 <p>6、<img src="http://img.blog.csdn.net/20131031074819750?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2FuZzM3OTI3NTYxNA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="存储管理方式"></p>
+<p>页式存储相当于固定分配一页的大小。段式存储根据一段是否有具体含义来一段一段分配活的分配方式。段页式先分段再分页</p>
+<p>死锁产生的原因有：竞争资源引起进程死锁/进程推进顺序不当引起死锁。产生死锁的四个必要充分条件：互斥条件、请求与保持条件、不剥夺条件、循环等待条件。</p>
 <p>###计算机网络</p>
+<p>1、OSI即开放式系统互联,是ISO国际标准化组织在1985年研究的网络互连模型。OSI参考模型定义了开放系统的层次结构、层次之间的相互关系及各层所包含的可能的服务。</p>
+<p>2、对于二进制数据，数据传输速率为：S=1/T（bps），其中T为发送每个比特需要的时间</p>
 
       
     </div>
@@ -472,6 +488,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/31/泰迪杯/" rel="prev" title="linux">
+                linux <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -540,7 +560,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -561,7 +581,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
