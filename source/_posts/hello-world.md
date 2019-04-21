@@ -38,6 +38,6 @@ $ hexo deploy
 More info: [Deployment](https://hexo.io/docs/deployment.html)
 <iframe 
 	height=498 width=510 
-	src="http://player.youku.com/player.php/sid/XNDE0MDYwNzMwNA==/v.swf' allowFullScreen='true' quality='high' width='480' height='400' align='middle' allowScriptAccess='always' type='application/x-shockwave-flash" 
+	src="http://player.youku.com/embed/XNDE0MDYwNzMwNA==" 
 	frameborder=0 allowfullscreen>
 </iframe>
