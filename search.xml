@@ -11,7 +11,7 @@
   <entry>
     <title><![CDATA[taidi]]></title>
     <url>%2F2019%2F03%2F31%2F%E6%B3%B0%E8%BF%AA%E6%9D%AF%2F</url>
-    <content type="text"><![CDATA[##基础命令 ###1、fdisk用于磁盘的分区 df]]></content>
+    <content type="text"><![CDATA[##基础命令 ###1、fdisk用于磁盘的分区]]></content>
       <categories>
         <category>linux</category>
       </categories>
