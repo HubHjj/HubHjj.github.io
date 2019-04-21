@@ -123,9 +123,12 @@
   {% include '_third-party/chatra.swig' %}
   {% include '_third-party/tidio.swig' %}
   
-
+  <div class="bg_content">
+  <canvas id="canvas"></canvas>
+  </div>
   
-  <!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/src/clicklove.js"></script>
+
 </body>
 </html>
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
