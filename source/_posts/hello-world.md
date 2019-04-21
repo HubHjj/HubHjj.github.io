@@ -39,6 +39,6 @@ More info: [Deployment](https://hexo.io/docs/deployment.html)
 
 <iframe 
 	height=498 width=510 
-	src="http://player.youku.com/embed/XNDE0MDYwNzMwNA==" 
+	src="https://player.youku.com/embed/XNDE0MDYwNzMwNA==" 
 	frameborder=0 allowfullscreen>
 </iframe>
