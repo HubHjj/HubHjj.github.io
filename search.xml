@@ -9,9 +9,9 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[linux]]></title>
+    <title><![CDATA[taidi]]></title>
     <url>%2F2019%2F03%2F31%2F%E6%B3%B0%E8%BF%AA%E6%9D%AF%2F</url>
-    <content type="text"><![CDATA[##基础命令 ###1、fdisk用于磁盘的分区fdisk -l查看磁盘分区的时候需要使用管理员权限可以看到磁盘每个区的大小 fdisk + 设备名进去分区，也需要权限]]></content>
+    <content type="text"><![CDATA[##基础命令 ###1、fdisk用于磁盘的分区]]></content>
       <categories>
         <category>linux</category>
       </categories>
