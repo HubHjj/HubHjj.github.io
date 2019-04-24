@@ -22,10 +22,7 @@
         "blog",
         "review",
         "test",
-        "translation",
-        "design",
-        "infra",
-        "maintenance"
+        "translation"
       ]
     },
     {
@@ -135,8 +132,7 @@
         "code",
         "doc",
         "review",
-        "test",
-        "projectManagement"
+        "test"
       ]
     },
     {
@@ -409,8 +405,7 @@
       "contributions": [
         "bug",
         "code",
-        "doc",
-        "infra"
+        "doc"
       ]
     },
     {
@@ -421,9 +416,7 @@
       "contributions": [
         "bug",
         "code",
-        "doc",
-        "translation",
-        "review"
+        "doc"
       ]
     },
     {
@@ -434,9 +427,7 @@
       "contributions": [
         "bug",
         "code",
-        "doc",
-        "review",
-        "translation"
+        "doc"
       ]
     },
     {
@@ -450,5 +441,5 @@
       ]
     }
   ],
-  "contributorsPerLine": 6
+  "contributorsPerLine": 7
 }

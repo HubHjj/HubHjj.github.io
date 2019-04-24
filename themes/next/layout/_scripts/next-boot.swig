@@ -1,6 +1,6 @@
 {%
   set boot_scripts = [
-    'next-boot.js'
+    'src/next-boot.js'
   ]
 %}
 

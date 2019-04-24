@@ -19,7 +19,7 @@ cache:
   # Default paths: layout/_custom/*
   #head: source/_data/head.swig
   #header: source/_data/header.swig
-  #sidebar: source/_data/.swig
+  #sidebar: source/_data/sidebar.swig
 
   # Default path: source/css/_variables/custom.styl
   #variables: source/_data/variables.styl
@@ -77,7 +77,7 @@ footer:
     version: true
 
   # Beian icp information for Chinese users. In China, every legal website should have a beian icp in website footer.
-  # http://www.beian.miit.gov.cn
+  # http://www.miitbeian.gov.cn
   beian:
     enable: false
     icp:
@@ -93,7 +93,7 @@ footer:
 # Valid values of language: deed.zh, deed.fr, deed.de, etc.
 creative_commons:
   license: by-nc-sa
-  : false
+  sidebar: false
   post: false
   language:
 
@@ -158,7 +158,7 @@ baidu_push: false
 # External url should start with http:// or https://
 menu:
   home: / || home
-  about: /about/ || user
+  #about: /about/ || user
   tags: /tags/ || tags
   categories: /categories/ || th
   archives: /archives/ || archive
@@ -184,11 +184,11 @@ scheme: Mist
 
 
 # ---------------------------------------------------------------
-#  Settings
-# See: https://theme-next.org/docs/theme-settings/
+# Sidebar Settings
+# See: https://theme-next.org/docs/theme-settings/sidebar/
 # ---------------------------------------------------------------
 
-# Posts / Categories / Tags in .
+# Posts / Categories / Tags in sidebar.
 site_state: true
 
 # Social Links
@@ -222,7 +222,7 @@ links_layout: block
 links:
   #Title: http://example.com
 
-#  Avatar
+# Sidebar Avatar
 avatar:
   # In theme directory (source/images): /images/avatar.gif
   # In site directory (source/uploads): /uploads/avatar.gif
@@ -235,12 +235,12 @@ avatar:
   # If true, the avatar would be rotated with the cursor.
   rotated: false
 
-# Table Of Contents in the 
+# Table Of Contents in the Sidebar
 toc:
   enable: true
   # Automatically add list number to toc.
   number: true
-  # If true, all words will placed on next lines if header width longer then  width.
+  # If true, all words will placed on next lines if header width longer then sidebar width.
   wrap: false
   # If true, all level of TOC in a post will be displayed, rather than the activated part of it.
   expand_all: false
@@ -249,8 +249,8 @@ toc:
 
 sidebar:
   # Sidebar Position, available values: left | right (only for Pisces | Gemini).
-  #position: left
-  position: right
+  position: left
+  #position: right
 
   # Manual define the sidebar width. If commented, will be default for:
   # Muse | Mist: 320
@@ -290,7 +290,7 @@ chat:
 
 # ---------------------------------------------------------------
 # Post Settings
-# See: https://theme-next.org/docs/theme-settings/posts
+# See: https://theme-next.org/docs/theme-settings/posts/
 # ---------------------------------------------------------------
 
 # Set the text alignment in the posts.
@@ -426,7 +426,7 @@ tagcloud:
   max: 30 # max font size in px
   start: "#ccc" # start color (hex, rgba, hsla or color keywords)
   end: "#111" # end color (hex, rgba, hsla or color keywords)
-  amount: 200 # amount of tags, change it if you have more than 200 tags
+  amount: 200 # amount of tags, chage it if you have more than 200 tags
 
 
 # ---------------------------------------------------------------
@@ -597,7 +597,7 @@ calendar:
 
 # ---------------------------------------------------------------
 # Comments and Widgets
-# See: https://theme-next.org/docs/third-party-services/comments-and-widgets
+# See: https://theme-next.org/docs/third-party-services/comments-and-widgets/
 # ---------------------------------------------------------------
 
 # Disqus
@@ -682,7 +682,7 @@ gitalk:
 
 # ---------------------------------------------------------------
 # Content Sharing Services
-# See: https://theme-next.org/docs/third-party-services/content-sharing-services
+# See: https://theme-next.org/docs/third-party-services/content-sharing-services/
 # ---------------------------------------------------------------
 
 # Baidu Share
@@ -741,7 +741,7 @@ needmoreshare2:
 
 # ---------------------------------------------------------------
 # Statistics and Analytics
-# See: https://theme-next.org/docs/third-party-services/statistics-and-analytics
+# See: https://theme-next.org/docs/third-party-services/statistics-and-analytics/
 # ---------------------------------------------------------------
 
 # Baidu Analytics ID
@@ -841,11 +841,11 @@ busuanzi_count:
 
 # ---------------------------------------------------------------
 # Search Services
-# See: https://theme-next.org/docs/third-party-services/search-services
+# See: https://theme-next.org/docs/third-party-services/search-services/
 # ---------------------------------------------------------------
 
 # Algolia Search
-# See: https://theme-next.org/docs/third-party-services/search-services#Algolia-Search
+# See: https://github.com/theme-next/hexo-theme-next/blob/master/docs/ALGOLIA-SEARCH.md
 # Dependencies: https://github.com/theme-next/theme-next-algolia-instant-search
 algolia_search:
   enable: false
@@ -859,7 +859,7 @@ algolia_search:
 # Local search
 # Dependencies: https://github.com/theme-next/hexo-generator-searchdb
 local_search:
-  enable: true
+  enable: false
   # If auto, trigger search by changing input.
   # If manual, trigger search by pressing enter key or search button.
   trigger: auto
@@ -874,7 +874,7 @@ local_search:
 
 # ---------------------------------------------------------------
 # Chat Services
-# See: https://theme-next.org/docs/third-party-services/chat-services
+# See: https://theme-next.org/docs/third-party-services/chat-services/
 # ---------------------------------------------------------------
 
 # Chatra Support
@@ -992,7 +992,7 @@ pace_theme: pace-theme-minimal
 # Canvas-nest
 # Dependencies: https://github.com/theme-next/theme-next-canvas-nest
 canvas_nest:
-  enable: true
+  enable: false
   onmobile: true # display on mobile or not
   color: "0,0,255" # RGB values, use ',' to separate
   opacity: 0.5 # the opacity of line: 0~1
@@ -1023,7 +1023,7 @@ canvas_ribbon:
 #! ---------------------------------------------------------------
 #! DO NOT EDIT THE FOLLOWING SETTINGS
 #! UNLESS YOU KNOW WHAT YOU ARE DOING
-#! See: https://theme-next.org/docs/advanced-settings
+#! See: https://theme-next.org/docs/advanced-settings/
 #! ---------------------------------------------------------------
 
 # Script Vendors. Set a CDN address for the vendor you want to customize.
@@ -1105,7 +1105,7 @@ vendors:
   # Example:
   # canvas_nest: //cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js
   # canvas_nest_nomobile: //cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest-nomobile.min.js
-  canvas_nest:
+  canvas_nest: true
   canvas_nest_nomobile:
 
   # Internal version: 1.0.0
