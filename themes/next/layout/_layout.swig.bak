@@ -27,7 +27,7 @@
  
  <div class="bg_content">
   <canvas id="canvas"></canvas>
-  </div>
+ </div>
 
   {% set container_class = 'container' %}
   {% if theme.sidebar.position %}
