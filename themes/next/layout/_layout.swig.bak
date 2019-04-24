@@ -25,6 +25,9 @@
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="{{ page.lang || page.language || config.language }}">
  
+ <div class="bg_content">
+  <canvas id="canvas"></canvas>
+  </div>
 
   {% set container_class = 'container' %}
   {% if theme.sidebar.position %}
