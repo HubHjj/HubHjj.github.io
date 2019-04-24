@@ -1,23 +1,30 @@
 // Custom styles.
-//鑳屾櫙鍥剧墖
-/*body {
-    background-image:url(/images/backgroud.jpg);
-    background-repeat: no-repeat;
-    background-attachment:fixed;
-    background-position:50% 50%;
-	background-size: 90% 100%;
- }*/
- .post {
+
+// 主页文章添加阴影效果
+.post {
    margin-top: 0px;
    margin-bottom: 60px;
    padding: 25px;
-   -webkit-box-shadow: 0 0 5px rgba(202, 203, 203, .5);
-   -moz-box-shadow: 0 0 5px rgba(202, 203, 204, .5);
+   -webkit-box-shadow: 0 0 5px rgba(202, 203, 203, .95);
+   -moz-box-shadow: 0 0 5px rgba(202, 203, 204, .95);
 }
-.bg_content {
-  position: fixed;
-  top: 0;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
+//主页文章设置  
+.main-inner {
+   margin-top: 60px;
+   padding: 60px 60px 60px 60px;
+   background: #fff;
+//   opacity: 0.8;
+   min-height: 500px;
+}
+
+
+.hider_title{
+    font-family: "Microsoft Yahei";
+    cursor: pointer;
+}
+.close:after{
+    content: "▼";
+}
+.open:after{
+    content: "▲";
 }
