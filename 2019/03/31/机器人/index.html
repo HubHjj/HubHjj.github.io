@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="##基于stm32的搬运机器人 ###1、所需传感器。机械爪部分：控制爪子+转盘两个180°舵机。丝杠的步进电机。运动控制：麦克纳姆轮、驱动。其他：二维码扫描模块、颜色传感器、激光测距传感器，光电传感器。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于stm32的搬运机器人">
+<meta property="og:url" content="http://yoursite.com/2019/03/31/机器人/index.html">
+<meta property="og:site_name" content="个人博客">
+<meta property="og:description" content="##基于stm32的搬运机器人 ###1、所需传感器。机械爪部分：控制爪子+转盘两个180°舵机。丝杠的步进电机。运动控制：麦克纳姆轮、驱动。其他：二维码扫描模块、颜色传感器、激光测距传感器，光电传感器。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/机器人/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/机器人/2.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/机器人/3.jpg">
+<meta property="og:updated_time" content="2019-04-27T04:35:49.426Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于stm32的搬运机器人">
+<meta name="twitter:description" content="##基于stm32的搬运机器人 ###1、所需传感器。机械爪部分：控制爪子+转盘两个180°舵机。丝杠的步进电机。运动控制：麦克纳姆轮、驱动。其他：二维码扫描模块、颜色传感器、激光测距传感器，光电传感器。">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/31/机器人/1.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/31/机器人/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>基于stm32的搬运机器人 | 个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+ 
+ <div class="bg_content">
+  <canvas id="canvas"></canvas>
+ </div>
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/31/机器人/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hjj">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于stm32的搬运机器人
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-31 18:04:38" itemprop="dateCreated datePublished" datetime="2019-03-31T18:04:38+08:00">2019-03-31</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-27 12:35:49" itemprop="dateModified" datetime="2019-04-27T12:35:49+08:00">2019-04-27</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/杂文/" itemprop="url" rel="index"><span itemprop="name">杂文</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <embed src="https://player.youku.com/player.php/sid/XNDE0MDYwNzMwNA==/v.swf" quality="high" width="480" height="400" align="middle" allowscriptaccess="always" allowfullscreen="true" mode="transparent" type="application/x-shockwave-flash">
+
+<p>##基于stm32的搬运机器人</p>
+<p>###1、所需传感器。<br>机械爪部分：控制爪子+转盘两个180°舵机。丝杠的步进电机。<br>运动控制：麦克纳姆轮、驱动。<br>其他：二维码扫描模块、颜色传感器、激光测距传感器，光电传感器。<br><a id="more"></a></p>
+<p>##控制</p>
+<p>###麦克纳姆轮<br>麦克纳姆轮基于运动学原理。当点击前转时轮子向旋转方向45°方向收到摩擦力<img src="/2019/03/31/机器人/1.jpg" alt="1.jpg">，四个轮子受力方向摆成菱形从而可以根据力的分解全向移动。<br><img src="/2019/03/31/机器人/2.jpg" alt="2.jpg"><br>最简单是前后左右和自转，这几个运动和底盘大小没有关系，只需根据力的分解改变单个轮子的方向，而速度相同。假如斜走就需要得到底盘大小，并且根据公式分解为4个轮子的速度和方向。<br><img src="/2019/03/31/机器人/3.jpg" alt="3.jpg">。<br>而我只需要前后左右基本方向，因此只需要四个方向函数，分别控制每个电机的转速与方向。</p>
+<p><pre><code>void Motor_qian(u16 moa,u16 mob,u16 moc,u16 mod)<br>{<br>        TIM_SetCompare1(TIM1,moa);    //修改比较值，修改占空比<br>                TIM_SetCompare2(TIM1,mob);    //修改比较值，修改占空比<br>        TIM_SetCompare3(TIM1,moc);    //修改比较值，修改占空比<br>        TIM_SetCompare4(TIM1,mod-37);    //修改比较值，修改占空比</code></pre></p>
+<pre><code>TIM_SetCompare1(TIM8,0);    //修改比较值，修改占空比
+           TIM_SetCompare2(TIM8,0);    //修改比较值，修改占空比
+TIM_SetCompare3(TIM8,0);    //修改比较值，修改占空比
+TIM_SetCompare4(TIM8,0);    //修改比较值，修改占空比
+</code></pre><p>}</p>
+<p>void Motor_hou(u16 moa,u16 mob,u16 moc,u16 mod)<br>{<br>        TIM_SetCompare1(TIM1,0);    //修改比较值，修改占空比<br>                TIM_SetCompare2(TIM1,0);    //修改比较值，修改占空比<br>        TIM_SetCompare3(TIM1,0);    //修改比较值，修改占空比<br>        TIM_SetCompare4(TIM1,0);    //修改比较值，修改占空比</p>
+<pre><code>TIM_SetCompare1(TIM8,moa+37);    //修改比较值，修改占空比
+        TIM_SetCompare2(TIM8,mob-37);    //修改比较值，修改占空比
+TIM_SetCompare3(TIM8,moc+37);    //修改比较值，修改占空比
+TIM_SetCompare4(TIM8,mod);    //修改比较值，修改占空比
+</code></pre><p>}  。<br>采用的电机带有编码器，而驱动用的红杉伟业驱动，一路PWM波控制一个电机的一个方向，因此要电机正反转动就需要两路PWM波控制一个电机。并且一路出波形一路为零。考虑到需要8路pwm波控制四个电机，因此可采用高级定时器的互补输出功能，并配上死区（一般也可以不要）高级定时器互补输出按照说明就是设置来给电机等大功率传感器使用，死区防止转变方向时H桥烧坏。</p>
+<p><pre><code><br>void TIMx_GPIO_Config(void)<br>{<br>    GPIO_InitTypeDef GPIO_InitStructure;<br>    RCC_AHB1PeriphClockCmd (RCC_AHB1Periph_GPIOC |RCC_AHB1Periph_GPIOA | RCC_AHB1Periph_GPIOB, ENABLE);<br>    GPIO_PinAFConfig(GPIOC,GPIO_PinSource6,GPIO_AF_TIM8);<br>    GPIO_PinAFConfig(GPIOA,GPIO_PinSource5,GPIO_AF_TIM8);<br>    GPIO_PinAFConfig(GPIOC,GPIO_PinSource7,GPIO_AF_TIM8);//第二路<br>    GPIO_PinAFConfig(GPIOB,GPIO_PinSource0,GPIO_AF_TIM8);<br>    GPIO_PinAFConfig(GPIOC,GPIO_PinSource8,GPIO_AF_TIM8);//第三路<br>    GPIO_PinAFConfig(GPIOB,GPIO_PinSource1,GPIO_AF_TIM8);<br>    GPIO_PinAFConfig(GPIOA,GPIO_PinSource8,GPIO_AF_TIM1);//第4路<br>    GPIO_PinAFConfig(GPIOA,GPIO_PinSource7,GPIO_AF_TIM1);</code></pre></p>
+<pre><code>GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8;
+GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+GPIO_Init(GPIOC, &amp;GPIO_InitStructure);
+GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_7 | GPIO_Pin_8;
+GPIO_Init(GPIOA, &amp;GPIO_InitStructure);
+GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1;
+GPIO_Init(GPIOB, &amp;GPIO_InitStructure); 
+</code></pre><p>/*  GPIO_InitTypeDef GPIO_InitStructure;<br>    RCC_AHB1PeriphClockCmd (RCC_AHB1Periph_GPIOC | RCC_AHB1Periph_GPIOA | RCC_AHB1Periph_GPIOE, ENABLE);<br>    GPIO_PinAFConfig(GPIOC,GPIO_PinSource6,GPIO_AF_TIM8);<br>    GPIO_PinAFConfig(GPIOC,GPIO_PinSource7,GPIO_AF_TIM8);<br>    GPIO_PinAFConfig(GPIOC,GPIO_PinSource8,GPIO_AF_TIM8);<br>    GPIO_PinAFConfig(GPIOC,GPIO_PinSource9,GPIO_AF_TIM8);<br>    GPIO_PinAFConfig(GPIOA,GPIO_PinSource8,GPIO_AF_TIM1);<br>    GPIO_PinAFConfig(GPIOA,GPIO_PinSource9,GPIO_AF_TIM1);<br>    GPIO_PinAFConfig(GPIOA,GPIO_PinSource10,GPIO_AF_TIM1);<br>    GPIO_PinAFConfig(GPIOA,GPIO_PinSource11,GPIO_AF_TIM1);</p>
+<pre><code>GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;
+GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+</code></pre><p>  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;<br>  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;<br>  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;<br>  GPIO_Init(GPIOC, &amp;GPIO_InitStructure);<br>    //GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;<br> // GPIO_Init(GPIOE, &amp;GPIO_InitStructure);<br>    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10;<br>  GPIO_Init(GPIOA, &amp;GPIO_InitStructure); */<br> }</p>
+<p>void TIM_Mode_Config(void)<br> {<br>TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;<br> TIM_OCInitTypeDef TIM_OCInitStructure;<br> TIM_BDTRInitTypeDef TIM_BDTRInitStructure;<br> /<em> ================== ????????=================== </em>/<br>  // 开启定时器时钟 TIMx_CLK,x[1,8]<br> RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM8, ENABLE);<br> RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);<br> // 累计 TIM_Period+1 产生中断<br> // 从0到1023 1024 为一个定时周期<br> TIM_TimeBaseStructure.TIM_Period = 1000;<br> // 时钟源 TIMxCLK = HCLK=168MHz<br> // 定时器频率TIMxCLK/(TIM_Prescaler+1)=10KHz<br> TIM_TimeBaseStructure.TIM_Prescaler = 21-1;<br> // 计数方式<br> TIM_TimeBaseStructure.TIM_ClockDivision=TIM_CKD_DIV1;<br>     // 重复计数<br> TIM_TimeBaseStructure.TIM_CounterMode=TIM_CounterMode_Up;<br> TIM_TimeBaseStructure.TIM_RepetitionCounter=0;<br> // 初始化定时器 TIMx, x[1,8]<br> TIM_TimeBaseInit(TIM8, &amp;TIM_TimeBaseStructure);<br> TIM_TimeBaseInit(TIM1, &amp;TIM_TimeBaseStructure);<br> // 配置 PWM 1,<br> TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;<br> // 主使能输出<br> TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;<br> // 互补使能输出<br> TIM_OCInitStructure.TIM_OutputNState = TIM_OutputNState_Enable;<br> // 配置比较值<br>// TIM_OCInitStructure.TIM_Pulse = 100;<br> // 主输出高电平有效<br> TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;<br> // 互补输出高电平有效<br> TIM_OCInitStructure.TIM_OCNPolarity = TIM_OCNPolarity_High;<br> // 主输出在被禁止时为高电平<br> TIM_OCInitStructure.TIM_OCIdleState = TIM_OCIdleState_Set;<br> // 互补输出在被禁止时为低电平<br> TIM_OCInitStructure.TIM_OCNIdleState = TIM_OCNIdleState_Reset;<br> // 通道初始化<br> TIM_OC1Init(TIM8, &amp;TIM_OCInitStructure);<br> TIM_OC2Init(TIM8, &amp;TIM_OCInitStructure);<br> TIM_OC3Init(TIM8, &amp;TIM_OCInitStructure);<br> TIM_OC1Init(TIM1, &amp;TIM_OCInitStructure);</p>
+<p> // 使能通道重装在<br> TIM_OC1PreloadConfig(TIM8, TIM_OCPreload_Enable);<br>  TIM_OC2PreloadConfig(TIM8, TIM_OCPreload_Enable);<br>    TIM_OC3PreloadConfig(TIM8, TIM_OCPreload_Enable);<br>    TIM_OC1PreloadConfig(TIM1, TIM_OCPreload_Enable);</p>
+<p> TIM_BDTRInitStructure.TIM_OSSRState = TIM_OSSRState_Enable;<br> TIM_BDTRInitStructure.TIM_OSSIState = TIM_OSSIState_Enable;<br> TIM_BDTRInitStructure.TIM_LOCKLevel = TIM_LOCKLevel_1;<br> // ??????<br> TIM_BDTRInitStructure.TIM_DeadTime = 11;<br>// TIM_BDTRInitStructure.TIM_Break = TIM_Break_Enable;<br> // ????????,??????????,??????????<br>// TIM_BDTRInitStructure.TIM_BreakPolarity = TIM_BreakPolarity_Low;<br> TIM_BDTRInitStructure.TIM_AutomaticOutput = TIM_AutomaticOutput_Enable;<br> TIM_BDTRConfig(TIM8, &amp;TIM_BDTRInitStructure);<br> TIM_Cmd(TIM8, ENABLE);<br> TIM_BDTRConfig(TIM1, &amp;TIM_BDTRInitStructure);<br> TIM_Cmd(TIM1, ENABLE);<br> TIM_CtrlPWMOutputs(TIM8, ENABLE);<br> TIM_CtrlPWMOutputs(TIM1, ENABLE);<br>/*    RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM8, ENABLE);<br> RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);<br> // 累计 TIM_Period+1 产生中断<br> // 从0到1023 1024 为一个定时周期<br> TIM_TimeBaseStructure.TIM_Period = 100;<br> // 时钟源 TIMxCLK = HCLK=168MHz<br> // 定时器频率TIMxCLK/(TIM_Prescaler+1)=10KHz<br> TIM_TimeBaseStructure.TIM_Prescaler = 168-1;<br> // 计数方式<br> TIM_TimeBaseStructure.TIM_ClockDivision=TIM_CKD_DIV1;<br>     // 重复计数<br> TIM_TimeBaseStructure.TIM_CounterMode=TIM_CounterMode_Up;<br> TIM_TimeBaseStructure.TIM_RepetitionCounter=0;<br> // 初始化定时器 TIMx, x[1,8]<br> TIM_TimeBaseInit(TIM8, &amp;TIM_TimeBaseStructure);<br> TIM_TimeBaseInit(TIM1, &amp;TIM_TimeBaseStructure);<br> // 配置 PWM 1,<br> TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;<br> // 主使能输出<br> TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;<br> // 配置比较值<br> TIM_OCInitStructure.TIM_Pulse = 50;<br> // 主输出高电平有效<br> TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;<br> // 通道初始化<br> TIM_OC4Init(TIM8, &amp;TIM_OCInitStructure);<br> TIM_OC3Init(TIM8, &amp;TIM_OCInitStructure);<br> TIM_OC2Init(TIM8, &amp;TIM_OCInitStructure);<br> TIM_OC1Init(TIM8, &amp;TIM_OCInitStructure);<br> TIM_OC1Init(TIM1, &amp;TIM_OCInitStructure);<br> TIM_OC4Init(TIM1, &amp;TIM_OCInitStructure);<br> TIM_OC3Init(TIM1, &amp;TIM_OCInitStructure);<br> TIM_OC2Init(TIM1, &amp;TIM_OCInitStructure);</p>
+<p> // 使能通道重装在<br>      TIM_OC1PreloadConfig(TIM8, TIM_OCPreload_Enable);<br>      TIM_OC2PreloadConfig(TIM8, TIM_OCPreload_Enable);<br>    TIM_OC3PreloadConfig(TIM8, TIM_OCPreload_Enable);<br>    TIM_OC4PreloadConfig(TIM8, TIM_OCPreload_Enable);<br>    TIM_OC1PreloadConfig(TIM1, TIM_OCPreload_Enable);<br>      TIM_OC2PreloadConfig(TIM1, TIM_OCPreload_Enable);<br>    TIM_OC3PreloadConfig(TIM1, TIM_OCPreload_Enable);<br>    TIM_OC4PreloadConfig(TIM1, TIM_OCPreload_Enable);<br>    TIM_ARRPreloadConfig(TIM1,ENABLE);//ARPE使能<br>    TIM_ARRPreloadConfig(TIM8,ENABLE);//ARPE使能<br>    TIM_Cmd(TIM1, ENABLE);<br>    TIM_Cmd(TIM8, ENABLE);<br>     TIM_CtrlPWMOutputs(TIM8, ENABLE);<br>     TIM_CtrlPWMOutputs(TIM1, ENABLE);*/<br> }<br>。<br>但是使用以后电机会有响声，老师说是因为互补输出导致H桥两边转换太快导致，因此用8路PWM实现，在初始化的时候不可将定时器1和8放在一个初始化函数中，否则有时可能会出错。比如某一路不出波形。</p>
+<p>##实现光电寻迹<br>寻迹是一个重点。光电传感器原理就是当激光扫到黑线时光被吸收返回一个电平，非黑返回另一个。根据现场场地来看，我想过三种光电摆放方式，一种以四个光电为一组成梯形摆放，与黑线水平放在黑线里。因此不止可以判断出黑线还可以判断是向那个方向偏，但是对摆放和巡线扫描精度要求比较高。<br>第二种就是直接两个光电中间压两个黑线，第三种将三个光电来巡，一个压中间白，另外两个压旁边也就是我自己采用的方式。试验后效果也不错。因为一般不会有较大转弯。那么两个光电就可以实现巡线。同时车身每边对应放就可以实现后面的对线校准。</p>
+<p>###PID<br>实现巡线自动控制重要的一个运动控制方法就是PID算法闭环处理自动调节，在整个车身的控制分为速度环（内环），光电（外环）。速度环的目的就是精确控制每个电机的速度。通过编码器获得的电机转速可能和预设值不同，因此就可以通过PID调节渐渐靠近预设值.<br>PID由三个重要部分组成：P（比例）I(积分)D（微分）组成。假设预期值为100，真实测量到的值为80，则还有20的偏差，为了快速减小偏差，通过比例系数乘以偏差值来弥补。偏差值可以随便设置，但是最好先判断下。比如在速度环中，偏差在于实际值与预设值间的偏差，那么为了减小这个偏差，就需要增大PWM波，但是又没有实际的关系和电机转速，。因此要提高的的是转速，就可以考虑定时器的频率周期为电机一秒转速的一个值，这样PWM就和电机转速扯上一定联系并且转速成为偏差值。而外环光电的偏差在于车身的偏移程度，即根据光电组那几个触到黑线的状态形成偏差，理想状态为中间传感器踩白，外面两个也才白偏差为零，否则根据预设方向设定偏差等级，值也是估计偏差值和比例的乘积与实际值的和能接近预设值。</p>
+<p><pre><code><br>uint8_t guangdian_filine(u8 zt,u8 dir)<br>{<br>    if(dir == 1 || dir ==2 )<br>    {<br>    //    printf(“%u \n”,zt);<br>        switch(zt)<br>        {<br>            case 0 : mid_err = 0;break;//直走<br>            case 1 : mid_err = -10;break;//直zuo<br>            case 3 : mid_err = -5;break;//向左偏<br>            case 4 : mid_err = 10;break;//向左偏<br>            case 6 : mid_err = 5;break;//向右偏<br>            case 7 : mid_err = 0;break;//向右偏</code></pre></p>
+<pre><code>    }
+}
+else if(dir == 3 || dir == 4)
+{
+//    printf(&quot;%u \n&quot;,zt);
+    switch(zt)
+    {
+        case 0 : mid_err = 0;break;//直走
+        case 1 : mid_err = -4;break;//zuo偏
+        case 3 : mid_err = -2;break;//zuo偏
+        case 4 : mid_err = 4;break;//zuo偏
+        case 6 : mid_err = 2;break;//向you偏
+    //    case 17 : Motor_stop();return 0;break;
+</code></pre><p>   //    case 31 : Motor_stop();return 0;break;</p>
+<pre><code>    }
+}
+</code></pre><p>}</p>
+<p>void calc_pid()<br>{<br>    P = mid_err;<br>    I =I + mid_err;<br>    D = mid_err - previous_error;<br>    PID_value = (Kp <em> P) + (Ki </em> I) + (Kd * D);<br>    previous_error = PID_value;<br>}</p>
+<p>void motor_cont(u8 dir)<br>{<br>    u16 a,b,c,d;<br>    if(dir == 1)<br>    {<br>        a = MoA + PID_value;<br>        b = MoB + PID_value;<br>        c = MoC - PID_value;<br>        d = MoD - PID_value;<br>    }<br>    else if(dir == 2)<br>    {<br>        a = MoA - PID_value;<br>        b = MoB - PID_value;<br>        c = MoC + PID_value;<br>        d = MoD + PID_value;<br>    }<br>    else if(dir == 3)<br>    {<br>        a = MoA + PID_value<em>0.6;<br>        b = MoB - PID_value</em>0.6;<br>        c = MoC - PID_value<em>0.6;<br>        d = MoD + PID_value</em>0.6;<br>    }<br>    else if(dir == 4)<br>    {<br>        a = MoA - PID_value;<br>        b = MoB + PID_value;<br>        c = MoC + PID_value;<br>        d = MoD - PID_value;<br>    }<br>    if( a &lt; 0)<br>        a = 0;<br>    if( b &lt; 0)<br>        b = 0;<br>    if( c &lt; 0)<br>        c = 0;<br>    if( d &lt; 0)<br>        d = 0;<br>    if( a &gt; 1000)<br>        a = 0;<br>    if( b &gt; 1000)<br>        b = 1000;<br>    if( c &gt; 1000)<br>        c = 1000;<br>    if( d &gt; 1000)<br>        d = 1000;<br>    if(dir == 1)<br>        Motor_qian(a,b,c,d);<br>    else if(dir == 2)<br>        Motor_hou(a,b,c,d);<br>    else if(dir == 3)<br>        Motor_zuo(a,b,c,d);<br>    else if(dir == 4)<br>        Motor_you(a,b,c,d);<br>//    printf(“%d %d %d %d\n”,a,b,c,d);<br>}<br><br>I是积分，积分是积累从开始到现在的偏差，为的是更快的调节到理想状态。比如当车左偏，然后仅有一个比例调节一定值，此时还是左偏，这两个偏差的积累使得车知道没有达到预估的向右，因此再来积分调节使得车更早向右偏，而不是调节两次还向左最后冲出去。不过加了I后容易过度，直接就想右走很多，因为当扫描频率过大时I的累加值很容易就过大导致转弯过度。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/31/linux/" rel="next" title="linux">
+                <i class="fa fa-chevron-left"></i> linux
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/05/python/" rel="prev" title="python 1">
+                python 1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hjj</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hjj</span>
+
+  
+
+  
+  <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+</div>
+
+
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="true"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+ 
+</body>
+</html>
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+<script type="text/javascript" src="/js/src/dynamic_bg.js"></script>
